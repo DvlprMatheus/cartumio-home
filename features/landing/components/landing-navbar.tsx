@@ -16,9 +16,9 @@ import {
 } from "@/features/shared/components/ui/sheet";
 
 const navItems = [
-  { href: "#inicio", label: "Início" },
+  { href: "/", label: "Início" },
   { href: "#sobre", label: "Sobre" },
-  { href: "#inscrever", label: "Se Inscrever" },
+  { href: "#inscrever", label: "Inscreva-se" },
 ];
 
 export function LandingNavbar() {
