@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { CARTUMIO_DESCRIPTION } from "@/lib/cartumio-meta";
 import { GlobalProviders } from "../providers/global-providers";
 
 const geistSans = Geist({
@@ -15,8 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Cartumio",
-  description: "O Cartumio é um projeto de correio digital que resgata a experiência " +
-    "afetiva do envio e recebimento de cartas, inspirada nos tempos antigos.",
+  description: CARTUMIO_DESCRIPTION,
   authors: [{ name: "Matheus Cruz", url: "https://github.com/DvlprMatheus" }],
   keywords: ["cartumio", "correio digital", "cartas", "tempos antigos", "projeto"],
   icons: {
