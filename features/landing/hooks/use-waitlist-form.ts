@@ -6,7 +6,7 @@ import type { FieldErrors } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { waitlistSchema } from "@/features/landing/schema/waitlist";
+import { waitlistSchema } from "@/features/landing/schemas/waitlist";
 import type { WaitlistFormValues } from "@/features/landing/types/landing";
 
 function collectErrorMessages(errors: Record<string, unknown>): string[] {

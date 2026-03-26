@@ -12,9 +12,8 @@ export const waitlistSchema = z.object({
     .min(1, "Informe o sobrenome.")
     .max(50, "Sobrenome deve ter no máximo 50 caracteres."),
   email: z
-    .string()
+    .email("Informe um e-mail válido.")
     .trim()
     .min(1, "Informe o e-mail.")
     .max(255, "E-mail deve ter no máximo 255 caracteres.")
-    .email("Informe um e-mail válido."),
 });
