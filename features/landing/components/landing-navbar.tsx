@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { Menu } from "lucide-react";
+import { LandingNavLink } from "@/features/landing/components/landing-nav-link";
 import { LandingThemeToggle } from "@/features/landing/components/landing-theme-toggle";
+import { useScrolled } from "@/features/landing/hooks/use-scrolled";
 import { Button } from "@/features/shared/components/ui/button";
 import {
   Sheet,
@@ -14,36 +15,29 @@ import {
   SheetTrigger,
 } from "@/features/shared/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import type { LandingView } from "@/features/landing/types/landing";
 
-const navItemClassName = cn(
-  "relative py-1 text-sm font-medium tracking-wide text-foreground/85 transition-colors",
-  "hover:text-foreground",
-  "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px",
-  "after:bg-gradient-to-r after:from-transparent after:via-foreground/55 after:to-transparent",
-  "after:opacity-0 after:transition-opacity after:duration-200",
-  "hover:after:opacity-100",
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
-);
-
-const navDefs: { id: LandingView; label: string }[] = [
-  { id: "inicio", label: "Início" },
-  { id: "sobre", label: "Sobre" },
-  { id: "inscrever", label: "Inscreva-se" },
+const navDefs: { href: string; label: string }[] = [
+  { href: "#inicio", label: "Início" },
+  { href: "#funcionalidades", label: "Como funciona" },
+  { href: "#sobre", label: "Sobre" },
+  { href: "#inscrever", label: "Inscreva-se" },
 ];
 
-type LandingNavbarProps = {
-  view: LandingView;
-  onViewChange: (view: LandingView) => void;
-};
+export function LandingNavbar() {
+  const scrolled = useScrolled();
 
-export function LandingNavbar({ view, onViewChange }: LandingNavbarProps) {
   return (
-    <header className="relative z-10 flex h-14 shrink-0 items-center px-4 sm:h-16 sm:px-6 md:px-10">
+    <header
+      className={cn(
+        "sticky top-0 z-40 flex h-14 shrink-0 items-center px-4 transition-all duration-300 sm:h-16 sm:px-6 md:px-10",
+        scrolled
+          ? "border-b border-border/20 bg-[oklch(0.965_0.022_85_/_0.25)] backdrop-blur-sm dark:bg-[oklch(0.145_0.016_85_/_0.25)]"
+          : "border-b border-border/40 bg-[oklch(0.965_0.022_85)] dark:bg-[oklch(0.145_0.016_85)]",
+      )}
+    >
       <div className="flex min-w-0 flex-1">
-        <Link
-          href="/"
-          onClick={() => onViewChange("inicio")}
+        <a
+          href="#inicio"
           className="flex min-w-0 items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
         >
           <span
@@ -70,33 +64,15 @@ export function LandingNavbar({ view, onViewChange }: LandingNavbarProps) {
           <span className="truncate text-sm font-semibold tracking-tight sm:text-base">
             Cartumio
           </span>
-        </Link>
+        </a>
       </div>
       <nav
         className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-8 md:flex"
         aria-label="Principal"
       >
-        {navDefs.map((item) =>
-          item.id === "inicio" ? (
-            <Link
-              key={item.id}
-              href="/"
-              onClick={() => onViewChange("inicio")}
-              className={cn(navItemClassName, view === item.id && "text-foreground after:opacity-100")}
-            >
-              {item.label}
-            </Link>
-          ) : (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => onViewChange(item.id)}
-              className={cn(navItemClassName, view === item.id && "text-foreground after:opacity-100")}
-            >
-              {item.label}
-            </button>
-          ),
-        )}
+        {navDefs.map((item) => (
+          <LandingNavLink key={item.href} href={item.href} label={item.label} />
+        ))}
       </nav>
       <div className="flex flex-1 items-center justify-end gap-0.5 sm:gap-1">
         <Sheet>
@@ -116,35 +92,18 @@ export function LandingNavbar({ view, onViewChange }: LandingNavbarProps) {
               <SheetTitle>Menu</SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col gap-1 px-2 pb-4" aria-label="Principal">
-              {navDefs.map((item) =>
-                item.id === "inicio" ? (
-                  <SheetClose asChild key={item.id}>
-                    <Link
-                      href="/"
-                      onClick={() => onViewChange("inicio")}
-                      className={cn(
-                        "block rounded-md px-3 py-3 text-base hover:bg-muted/80",
-                        view === item.id && "bg-muted/60",
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  </SheetClose>
-                ) : (
-                  <SheetClose asChild key={item.id}>
-                    <button
-                      type="button"
-                      onClick={() => onViewChange(item.id)}
-                      className={cn(
-                        "block w-full rounded-md px-3 py-3 text-left text-base hover:bg-muted/80",
-                        view === item.id && "bg-muted/60",
-                      )}
-                    >
-                      {item.label}
-                    </button>
-                  </SheetClose>
-                ),
-              )}
+              {navDefs.map((item) => (
+                <SheetClose asChild key={item.href}>
+                  <a
+                    href={item.href}
+                    className={cn(
+                      "block rounded-md px-3 py-3 text-base transition-colors hover:bg-muted/80",
+                    )}
+                  >
+                    {item.label}
+                  </a>
+                </SheetClose>
+              ))}
             </nav>
           </SheetContent>
         </Sheet>
