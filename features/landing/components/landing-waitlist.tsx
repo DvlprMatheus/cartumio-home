@@ -19,70 +19,83 @@ export function LandingWaitlist() {
   const { register, handleSubmit, onValid, onInvalid, formState } = useWaitlistForm();
 
   return (
-    <div className="flex min-w-0 max-w-xl flex-col justify-center space-y-5 sm:space-y-6">
-      <div className="space-y-2">
-        <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground sm:text-xs">
+    <section
+      id="inscrever"
+      className="border-t border-border/40 px-4 py-20 sm:px-6 sm:py-24 lg:px-12 lg:py-28"
+    >
+      <div className="mx-auto max-w-lg">
+        <div className="mb-10 space-y-3 text-center sm:mb-12">
+          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground sm:text-xs">
           Waitlist
-        </p>
-        <h2 className="text-balance text-xl font-semibold tracking-tight sm:text-2xl">
+          </p>
+          <h2 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
           Inscreva-se
-        </h2>
-        <p className="text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+          </h2>
+          <p className="text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
           O Cartumio está em fase inicial. Se a ideia fizer sentido para você, deixe seus dados e
           entramos na lista de espera.
-        </p>
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-border/60 bg-card/60 p-6 sm:p-8">
+          <form
+            className="space-y-5"
+            onSubmit={handleSubmit(onValid, onInvalid)}
+            noValidate
+          >
+            <FieldGroup className="gap-4">
+              <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                <Field className="min-w-0">
+                  <FieldLabel htmlFor="waitlist-firstName">Nome</FieldLabel>
+                  <FieldContent>
+                    <Input
+                      id="waitlist-firstName"
+                      autoComplete="given-name"
+                      disabled={formState.isSubmitting}
+                      className={inputBorderVisual}
+                      {...register("firstName")}
+                    />
+                  </FieldContent>
+                </Field>
+                <Field className="min-w-0">
+                  <FieldLabel htmlFor="waitlist-lastName">Sobrenome</FieldLabel>
+                  <FieldContent>
+                    <Input
+                      id="waitlist-lastName"
+                      autoComplete="family-name"
+                      disabled={formState.isSubmitting}
+                      className={inputBorderVisual}
+                      {...register("lastName")}
+                    />
+                  </FieldContent>
+                </Field>
+              </div>
+              <Field className="w-full">
+                <FieldLabel htmlFor="waitlist-email">E-mail</FieldLabel>
+                <FieldContent>
+                  <Input
+                    id="waitlist-email"
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    disabled={formState.isSubmitting}
+                    className={inputBorderVisual}
+                    {...register("email")}
+                  />
+                </FieldContent>
+              </Field>
+            </FieldGroup>
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full"
+              disabled={formState.isSubmitting}
+            >
+              {formState.isSubmitting ? "Enviando…" : "Quero participar"}
+            </Button>
+          </form>
+        </div>
       </div>
-      <form
-        className="space-y-4"
-        onSubmit={handleSubmit(onValid, onInvalid)}
-        noValidate
-      >
-        <FieldGroup className="gap-4">
-          <div className="grid min-w-0 grid-cols-2 gap-3 sm:gap-4">
-            <Field className="min-w-0">
-              <FieldLabel htmlFor="waitlist-firstName">Nome</FieldLabel>
-              <FieldContent>
-                <Input
-                  id="waitlist-firstName"
-                  autoComplete="given-name"
-                  disabled={formState.isSubmitting}
-                  className={inputBorderVisual}
-                  {...register("firstName")}
-                />
-              </FieldContent>
-            </Field>
-            <Field className="min-w-0">
-              <FieldLabel htmlFor="waitlist-lastName">Sobrenome</FieldLabel>
-              <FieldContent>
-                <Input
-                  id="waitlist-lastName"
-                  autoComplete="family-name"
-                  disabled={formState.isSubmitting}
-                  className={inputBorderVisual}
-                  {...register("lastName")}
-                />
-              </FieldContent>
-            </Field>
-          </div>
-          <Field className="w-full">
-            <FieldLabel htmlFor="waitlist-email">E-mail</FieldLabel>
-            <FieldContent>
-              <Input
-                id="waitlist-email"
-                type="email"
-                autoComplete="email"
-                inputMode="email"
-                disabled={formState.isSubmitting}
-                className={inputBorderVisual}
-                {...register("email")}
-              />
-            </FieldContent>
-          </Field>
-        </FieldGroup>
-        <Button type="submit" className="w-full sm:w-auto" disabled={formState.isSubmitting}>
-          Enviar
-        </Button>
-      </form>
-    </div>
+    </section>
   );
 }

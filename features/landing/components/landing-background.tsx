@@ -1,4 +1,4 @@
-const layer = "pointer-events-none absolute inset-0 -z-10";
+const layer = "pointer-events-none fixed inset-0 -z-10";
 
 const PAPER_GRAIN = `url("data:image/svg+xml,${encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256">' +
