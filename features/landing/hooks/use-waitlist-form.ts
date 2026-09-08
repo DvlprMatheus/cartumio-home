@@ -6,6 +6,7 @@ import type { FieldErrors } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+import { useWaitlistContext } from "@/features/landing/contexts/waitlist-context";
 import { waitlistSchema } from "@/features/landing/schemas/waitlist";
 import type { WaitlistFormValues } from "@/features/landing/types/landing";
 
@@ -24,6 +25,7 @@ function collectErrorMessages(errors: Record<string, unknown>): string[] {
 }
 
 export function useWaitlistForm() {
+  const { submitWaitlist, isSubmitting } = useWaitlistContext();
   const form = useForm<WaitlistFormValues>({
     resolver: zodResolver(waitlistSchema),
     defaultValues: {
@@ -40,15 +42,21 @@ export function useWaitlistForm() {
     }
   }, []);
 
-  const onValid = useCallback(async (_data: WaitlistFormValues) => {
-    void _data;
-  }, []);
+  const onValid = useCallback(
+    async (data: WaitlistFormValues) => {
+      const success = await submitWaitlist(data);
+      if (success) {
+        form.reset();
+      }
+    },
+    [form, submitWaitlist],
+  );
 
   return {
     register: form.register,
     handleSubmit: form.handleSubmit,
     onValid,
     onInvalid,
-    formState: form.formState,
+    isSubmitting: isSubmitting || form.formState.isSubmitting,
   };
 }

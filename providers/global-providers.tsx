@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Toaster } from "@/features/shared/components/ui/sonner";
 import { ThemeProvider } from "@/providers/theme-provider";
 
-export function GlobalProviders({ children }: { children: React.ReactNode }) {
+export function GlobalProviders({ children }: Readonly<{ children: React.ReactNode }>) {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
