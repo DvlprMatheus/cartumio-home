@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { CARTUMIO_DESCRIPTION } from "@/lib/cartumio-meta";
 
 const CREATOR_GITHUB = "https://github.com/DvlprMatheus";
@@ -26,12 +28,13 @@ export function LandingAbout() {
             Quem faz
           </p>
           <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-6">
-            <div
-              className="mx-auto flex size-16 shrink-0 items-center justify-center rounded-xl border border-dashed border-muted-foreground/35 bg-muted/30 text-[0.6rem] text-muted-foreground sm:mx-0 sm:size-20"
-              aria-hidden
-            >
-              Em breve
-            </div>
+            <Image
+              src="/profile.jpg"
+              alt="Matheus Cruz"
+              width={80}
+              height={80}
+              className="mx-auto size-16 shrink-0 rounded-xl border border-border/60 object-cover sm:mx-0 sm:size-20"
+            />
             <div className="min-w-0 space-y-2 text-center sm:text-left">
               <p className="text-base font-semibold text-foreground sm:text-lg">Matheus Cruz</p>
               <p className="text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
